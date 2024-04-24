@@ -96,7 +96,7 @@ def apicommentsrequest(url):
 
 def get_info(request):
     global version
-    return json.dumps([version,os.environ.get('RENDER_EXTERNAL_URL'),str(request.scope["headers"]),str(request.scope['router'])[39:-2]])
+    return json.dumps([version,os.environ.get('RENDER_EXTERNAL_URL'),str(request.scope["headers"])])
 
 def get_data(videoid):
     global logs
