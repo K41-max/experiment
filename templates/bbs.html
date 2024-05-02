@@ -77,11 +77,13 @@
         color: var("--link-hover");
       }
       
-      .menu, .submit_menu {
+      .menu {
         display: none;
       }
-
-      .menu.active, .submit_menu.active {
+      .submit_menu {
+        display: inline-block;
+      }
+      .menu.active{
         display: inline-block;
       }
       .menu-toggle-button{
@@ -90,7 +92,6 @@
     </style>
   </head>
   <body>
-    <a href="/">ホームへ戻る</a>
     <a href="javascript:var menu = document.querySelector('.menu'); menu.classList.toggle('active');" class="menu-toggle-button">メニュー</a>
     <div class="menu">
       <label for="darkmode">ダークモード:</label>
@@ -120,10 +121,10 @@
         <option value="battle">バトスタ</option>
       </select>
       <br>
-      <a href="javascript:var submitMenu = document.querySelector('.submit_menu'); submitMenu.classList.toggle('active');">送信設定</a>
+      <br>
       <div class="submit_menu">
         <label for="name">名前</label>
-        <input type="text" id="name" value="" maxlength="25" required>　
+        <input type="text" id="name" value="" maxlength="40" required>　
         <label for="seed">シード</label>
         <input type="text" id="seed" value="" required>
         <br>
