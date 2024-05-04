@@ -132,7 +132,7 @@
         <label for="name">名前</label>
         <input type="text" id="name" value="" maxlength="40" required>　
         <label for="seed">シード</label>
-        <input type="password" id="seed" class="textPassword" value="" required>
+        <input type="password" id="seed" value="" required>
         <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
         <span id="eyeText" onclick="pushHideButton()">表示する</span>
         <br>
@@ -172,7 +172,7 @@
 
   <script language="javascript">
       function pushHideButton() {
-        var txtPass = document.getElementsByClassName("textPassword");
+        var txtPass = document.getElementsById("seed");
         var btnEye = document.getElementById("buttonEye");
         var eyeText = document.getElementById("eyeText");
 
