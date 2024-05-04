@@ -6,6 +6,7 @@
 　<meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <style>
       
       :root {
@@ -118,7 +119,6 @@
     <h1>Yuki BBS 改造インスタンス</h1>
     <br>
     <p>k41が作ったYuki BBSの改造インスタンスです。</p><br>
-    <p>現在オンラインユーザー数: 現在まだ実装途中です</p>
     <a href="/bbs/howtouse">使い方</a>
     <br>
     <form id="form">
@@ -132,7 +132,9 @@
         <label for="name">名前</label>
         <input type="text" id="name" value="" maxlength="40" required>　
         <label for="seed">シード</label>
-        <input type="text" id="seed" value="" required>
+        <input type="password textPassword" id="seed" value="" required>
+        <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
+        <span id="eyeText" onclick="pushHideButton()">表示する</span>
         <br>
       </div>
       <br>
@@ -169,6 +171,21 @@
     <div id="result">loading...</div>
       
   <script>
+    function pushHideButton() {
+        var txtPass = document.getElementById("textPassword");
+        var btnEye = document.getElementById("buttonEye");
+        var eyeText = document.getElementById("eyeText");
+
+        if (txtPass.type === "text") {
+          txtPass.type = "password";
+          btnEye.className = "fa fa-eye";
+          eyeText.textContent = "表示する";
+        } else {
+          txtPass.type = "text";
+          btnEye.className = "fa fa-eye-slash";
+          eyeText.textContent = "非表示にする";
+        }
+      }
     var $form = $("#form");
     var $ta = $("#message");
     var $entersubmit = $("#entersubmit");
