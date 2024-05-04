@@ -98,6 +98,27 @@
     </style>
   </head>
   <body>
+      <input type="password" id="textPassword" value="password123">
+      <!-- パスワード表示アイコンとテキスト -->
+      <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
+      <span id="eyeText" onclick="pushHideButton()">表示する</span>
+    <script language="javascript">
+      function pushHideButton() {
+        var txtPass = document.getElementById("textPassword");
+        var btnEye = document.getElementById("buttonEye");
+        var eyeText = document.getElementById("eyeText");
+
+        if (txtPass.type === "text") {
+          txtPass.type = "password";
+          btnEye.className = "fa fa-eye";
+          eyeText.textContent = "表示する";
+        } else {
+          txtPass.type = "text";
+          btnEye.className = "fa fa-eye-slash";
+          eyeText.textContent = "非表示にする";
+        }
+      }
+    </script>
     <a href="/" class="test">戻る</a>
     <a href="javascript:var menu = document.querySelector('.menu'); menu.classList.toggle('active');" class="menu-toggle-button">メニュー</a>
     <div class="menu">
