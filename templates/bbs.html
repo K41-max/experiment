@@ -339,7 +339,7 @@
             var thirdContent = thirdTd.html();
             firstTd.html(`<button class="anchor" id="${number}">${number}</button>`);
             secondTd.html(`<button class="userIDAnchor">${username}</button>`);
-            thirdTd.html(`<span>${escapeHtmlExceptAnchorAndButton(thirdContent)}</span>`);  
+            thirdTd.html(escapeHtmlExceptAnchorAndButton(thirdContent));
           });
           $("#result").find("*").contents().each(function() {
             if (this.nodeType === 3) {
