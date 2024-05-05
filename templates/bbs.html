@@ -329,10 +329,12 @@
           $('table tr').each(function() {
             var firstTd = $(this).find('td:first');
             var secondTd = $(this).find('td:eq(1)');
+            var thirdTd = $(this).find('td:eq(2)');
             var number = firstTd.text();
             var username = secondTd.html();
             firstTd.html(`<button class="anchor" id="${number}">${number}</button>`);
             secondTd.html(`<button class="userIDAnchor">${username}</button>`);
+            thirdTd.html(`<span>${thirdContent}</span>`);  
           });
           $("#result").find("*").contents().each(function() {
             if (this.nodeType === 3) {
