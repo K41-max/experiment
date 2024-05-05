@@ -207,9 +207,7 @@
     </script>
   <script>
     function escapeHtmlExceptButtonAndAnchor(unsafe) {
-    return unsafe.replace(/(<(?!\/?(button|a)\b)[^>]+>)/g, function(match) {
-        return match.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      });
+    return unsafe.replace(/<(?!(\/?(button|a)\b))[^>]*>/g, '&lt;');
     }
   </script>
   <script>
