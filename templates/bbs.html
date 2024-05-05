@@ -205,7 +205,11 @@
         }
       }
     </script>
-      
+  <script>
+    function escapeHtmlExceptAnchorAndButton(unsafe) {
+    return unsafe.replace(/<(?!(\/?\s*(a|button)\b))[^>]*>/g, '&lt;');
+    }
+  </script>
   <script>
     var $form = $("#form");
     var $ta = $("#message");
@@ -335,7 +339,7 @@
             var thirdContent = thirdTd.html();
             firstTd.html(`<button class="anchor" id="${number}">${number}</button>`);
             secondTd.html(`<button class="userIDAnchor">${username}</button>`);
-            thirdTd.html(`<span>${thirdContent}</span>`);  
+            thirdTd.html(`<span>${escapeHtmlExceptAnchorAndButton(thirdContent)}</span>`);  
           });
           $("#result").find("*").contents().each(function() {
             if (this.nodeType === 3) {
