@@ -332,6 +332,7 @@
             var thirdTd = $(this).find('td:eq(2)');
             var number = firstTd.text();
             var username = secondTd.html();
+            var thirdContent = thirdTd.html();
             firstTd.html(`<button class="anchor" id="${number}">${number}</button>`);
             secondTd.html(`<button class="userIDAnchor">${username}</button>`);
             thirdTd.html(`<span>${thirdContent}</span>`);  
