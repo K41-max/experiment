@@ -331,7 +331,7 @@
             var thirdTd = $(this).find('td:eq(2)');
             var number = firstTd.text();
             var username = secondTd.html();
-            var thirdContent = thirdTd.html();
+            var thirdContent = thirdTd.text();
             function escapeHtml(unsafe) {
               return unsafe
                 .replace(/&/g, "&amp;")
