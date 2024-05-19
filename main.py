@@ -275,7 +275,9 @@ def write_bbs(request: Request,name: str = "",message: str = "",seed:Union[str,N
     message = base64.b64decode(message).decode('utf-8')
     # print(get_info(request))
     print(f"name:{name}, seed:{seed}, channel:{channel}, message:{message}")
-    t = requests.get(fr"{url}bbs/result?name={urllib.parse.quote(name)}&message={urllib.parse.quote(message)}&seed={urllib.parse.quote(seed)}&channel={urllib.parse.quote(channel)}&verify={urllib.parse.quote(verify)}&info={urllib.parse.quote(get_info(request))}",cookies={"yuki":"True"}, allow_redirects=False)
+    request_url=fr"{url}bbs/result?name={urllib.parse.quote(name)}&message={urllib.parse.quote(message)}&seed={urllib.parse.quote(seed)}&channel={urllib.parse.quote(channel)}&verify={urllib.parse.quote(verify)}&info={urllib.parse.quote(get_info(request))}"
+    t = requests.get(request_url,cookies={"yuki":"True"}, allow_redirects=False)
+    print(request_url)
     if t.status_code != 307:
         return HTMLResponse(t.text)
     return redirect(f"/bbs?name={urllib.parse.quote(name)}&seed={urllib.parse.quote(seed)}&channel={urllib.parse.quote(channel)}&verify={urllib.parse.quote(verify)}")
