@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lnag="ja">
 <head>
-  <link rel="stylesheet" type="text/css" href="https://pgmemo.tokyo/data/filedir/1178_1.css?975 ">
+  <link rel="stylesheet" type="text/css" href="https://pgmemo.tokyo/data/filedir/1178_1.css?975">
   <link rel="stylesheet" type="text/css" href="//img.atcoder.jp/public/ea27d23/css/base.css">
   <link rel="shortcut icon" type="image/png" href="//img.atcoder.jp/assets/favicon.png">
   <link rel="apple-touch-icon" href="//img.atcoder.jp/assets/atcoder.png">
@@ -359,34 +359,6 @@
               $(this).replaceWith(replacedText);
             }
           });
-           $("#result").find("*").contents().each(function() {
-            if (this.nodeType === 3) {
-              var text = $(this).text();
-              let regex = /^.*\/(?:watch\?)?(?:v=)?(?:feature=[a-z_]+&)?(?:v=)?([a-zA-Z0-9-=_]+)(?:&feature=[a-z_]*)?(?:\?t=[0-9]+)?$/;
-　　　　　　　　　let match = text.match(regex);
-    　        if (match) {
-                let videoId = match[1];
-                
-            }
-          });
-
-           $("#result").find("*").contents().each(function() { 
-            let text = $(this).text();
-            let urlRegex = /^.*\/(?:watch\?)?(?:v=)?(?:feature=[a-z_]+&)?(?:v=)?([a-zA-Z0-9-=_]+)(?:&feature=[a-z_]*)?(?:\?t=[0-9]+)?$/;
-        
-            if (urlRegex.test(text)) {
-              let replacedText = text.replace(urlRegex, function(url) {
-                let match = url.match(urlRegex);
-                if (match) {
-                  let videoId = match[1];
-                  return '<a href="/watch?v=' + videoId + '">' + text + '</a>';
-                }
-                return url;
-              });
-              $(this).replaceWith(replacedText);
-            }
-          });
-        });
           $('.anchor').click(function() {
             var currentMsg = $('#message').val();
             $('#message').val(currentMsg + '≫' + $(this).text() + ' ');
