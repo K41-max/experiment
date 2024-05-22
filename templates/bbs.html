@@ -365,15 +365,10 @@
           });
             $("#result").find("*").contents().each(function() {
               let text = $(this).text();
-              let urlRegex = /^.*\/(?:watch\?)?(?:v=)?(?:feature=[a-z_]+&)?(?:v=)?([a-zA-Z0-9-=_]+)(?:&feature=[a-z_]*)?(?:\?t=[0-9]+)?$/;
+              let urlRegex = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/|.*\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
               if (urlRegex.test(text)) {
-                let replacedText = text.replace(urlRegex, function(url) {
-                  let match = url.match(urlRegex);
-                  if (match) {
-                    let videoId = match[1];
-                    return '<a class="videoid" href="/watch?v=' + videoId + '">' + text + '</a>';
-                  }
-                  return url;
+                let replacedText = text.replace(urlRegex, function(url, videoId) {
+                  return '<a href="/watch?v=' + videoId + '">' + text + '</a>';
                 });
                 $(this).replaceWith(replacedText);
               }
