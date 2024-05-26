@@ -313,89 +313,88 @@
     
     
     // メッセージ読み込み
-    var xhr;
-    function loadMessage() {
-      if (xhr && xhr.readyState !== 4) { xhr.abort(); }
-      
-      var channel = $('#channel').val();
-      var filter = $('#verify').prop('checked');
-      
-      xhr = $.ajax({
-        type: 'GET',
-        url: '/bbs/api',
-        headers: { 'Accept': null },
-        xhrFields: {
-          withCredentials: true
-        },
-        data: {
-          'channel': channel,
-          'verify': filter,
-          't': 0
-        },
-        success: function(data) {
-          $('#result').html(data);
-          $('table tr').each(function() {
-            var firstTd = $(this).find('td:first');
-            var secondTd = $(this).find('td:eq(1)');
-            var thirdTd = $(this).find('td:eq(2)');
-            var number = firstTd.text();
-            var username = secondTd.html();
-            var thirdContent = thirdTd.text();
-            
-            function escapeHtml(unsafe) {
-            return unsafe
-            }
-            
-            firstTd.html(`<button class="anchor" id="${number}">${number}</button>`);
-            secondTd.html(`<button class="userIDAnchor">${username}</button>`);
-            thirdTd.html(escapeHtml(thirdContent));
-          });
-          $("#result").find("*").contents().each(function() {
-            if (this.nodeType === 3) {
-              var text = $(this).text();
-              var replacedText = text.replace(/≫(\d+) /g, "<a href='#$1'>$&</a>");
-              var urlRegex = /(https?:\/\/[^\s]+)/g;
-    　         if (urlRegex.test(text)) {
-                replacedText = replacedText.replace(urlRegex, function(url) {
-                  return '<a href="' + url + '">' + url + '</a>';
-                });
-              }
-              $(this).replaceWith(replacedText);
-            }
-          });
-          $("#result").find("*").contents().each(function() {
-            if (this.nodeType === 3) {
-                var text = $(this).text();
-                const urlRegex = /^.*\/(?:watch\?)?(?:v=)?(?:feature=[a-z_]+&)?(?:v=)?([a-zA-Z0-9-_]{11,})(?:&feature=[a-z_]*)?(?:\?t=[0-9]+)?$/;
-                if (urlRegex.test(text)) {
-                    let replacedText = text.replace(urlRegex, function(url) {
-                        let match = url.match(urlRegex);
-                        if (match) {
-                            let videoId = match[1];
-                            return '<a href="/watch?v=' + videoId + '">' + url + '</a>';
-                        }
-                        return url;
-                    });
-                    $(this).replaceWith(replacedText);
-                }
-            }
-        });
+function loadData(channel, resultClass) {
+  var xhr = $.ajax({
+    type: 'GET',
+    url: '/bbs/api',
+    headers: { 'Accept': null },
+    xhrFields: {
+      withCredentials: true
+    },
+    data: {
+      'channel': channel,
+      'verify': $('#verify').prop('checked'),
+      't': 0
+    },
+    success: function(data) {
+      $(resultClass).html(data);
 
-          
-          $('.anchor').click(function() {
-            var currentMsg = $('#message').val();
-            $('#message').val(currentMsg + '≫' + $(this).text() + ' ');
-          });
-          
-          $('.userIDAnchor').click(function() {
-            var currentMsg = $('#message').val();
-            var cmdRegex = /^\/(dis)?speaker|manager|moderator$/g;
-            if (currentMsg.match(cmdRegex)) { $('#message').val(currentMsg + ' ' + $(this).text()); } else { $('#message').val(currentMsg + $(this).text()); }
-          });
-          if (localStorage.getItem('darkmode') === 'true') { toDarkmode(); } else { toLightmode(); }
+      $('table tr').each(function() {
+        var firstTd = $(this).find('td:first');
+        var secondTd = $(this).find('td:eq(1)');
+        var thirdTd = $(this).find('td:eq(2)');
+        var number = firstTd.text();
+        var username = secondTd.html();
+        var thirdContent = thirdTd.text();
+
+        function escapeHtml(unsafe) {
+          return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "escape")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }
+
+        firstTd.html(`<button class="anchor" id="${number}">${number}</button>`);
+        secondTd.html(`<button class="userIDAnchor">${username}</button>`);
+        thirdTd.html(escapeHtml(thirdContent));
+      });
+
+      $(resultClass).find("*").contents().each(function() {
+        if (this.nodeType === 3) {
+          var text = $(this).text();
+          var replacedText = text.replace(/≫(\d+) /g, "<a href='#$1'>$&</a>");
+          var urlRegex = /(https?:\/\/[^\s]+)/g;
+          if (urlRegex.test(text)) {
+            replacedText = replacedText.replace(urlRegex, function(url) {
+              return '<a href="' + url + '">' + url + '</a>';
+            });
+          }
+          $(this).replaceWith(replacedText);
         }
       });
+
+      $('.anchor').click(function() {
+        var currentMsg = $('#message').val();
+        $('#message').val(currentMsg + '≫' + $(this).text() + ' ');
+      });
+
+      $('.userIDAnchor').click(function() {
+        var currentMsg = $('#message').val();
+        var cmdRegex = /^\/(dis)?speaker|manager|moderator$/g;
+        if (currentMsg.match(cmdRegex)) { $('#message').val(currentMsg + ' ' + $(this).text()); } else { $('#message').val(currentMsg + $(this).text()); }
+      });
+
+      if (localStorage.getItem('darkmode') === 'true') { toDarkmode(); } else { toLightmode(); }
     }
+  });
+
+  return xhr;
+}
+
+function loadmainMessage() {
+  loadData('main', '.main_result');
+}
+
+function loadbattleMessage() {
+  loadData('battle', '.battle_result');
+}
+
+
+loadMainMessage();
+loadBattleMessage();
+
     
     // ネットワークコネクション検知
     function updateConnectionStatus() {
