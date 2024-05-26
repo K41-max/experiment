@@ -313,8 +313,12 @@
     
     
     // メッセージ読み込み
-function loadData(channel, resultClass) {
-  var xhr = $.ajax({
+var xhrMain, xhrBattle;
+
+function loadData(channel, resultClass, xhrVar) {
+  if (xhrVar && xhrVar.readyState !== 4) { xhrVar.abort(); }
+
+  xhrVar = $.ajax({
     type: 'GET',
     url: '/bbs/api',
     headers: { 'Accept': null },
@@ -340,7 +344,7 @@ function loadData(channel, resultClass) {
         function escapeHtml(unsafe) {
           return unsafe
             .replace(/&/g, "&amp;")
-            .replace(/</g, "escape")
+            .replace(/</g, "&lt;")  // Corrected escape sequence
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
@@ -380,20 +384,21 @@ function loadData(channel, resultClass) {
     }
   });
 
-  return xhr;
+  return xhrVar;
 }
 
-function loadmainMessage() {
-  loadData('main', '.main_result');
+function loadMainMessage() {
+  xhrMain = loadData('main', '.main_result', xhrMain);
 }
 
-function loadbattleMessage() {
-  loadData('battle', '.battle_result');
+function loadBattleMessage() {
+  xhrBattle = loadData('battle', '.battle_result', xhrBattle);
 }
 
-
+// 両方の関数を並列で呼び出す
 loadMainMessage();
 loadBattleMessage();
+
 
     
     // ネットワークコネクション検知
