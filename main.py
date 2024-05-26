@@ -303,8 +303,6 @@ def view_bbs(request: Request,name: Union[str, None] = "",seed:Union[str,None]="
     return template("bbshow.html",{"request":request})
     #return res
 
-@app.get("/php",response_class=HTMLResponse)
-    return template("index.php",{"request":request})
 
 
 @app.exception_handler(500)
