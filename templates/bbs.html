@@ -185,8 +185,41 @@
         cursor: pointer;
       }
     </style>
+    <style>
+      .container {
+        display: flex;
+        width: 100%;
+        height: 100vh; 
+      }
+    
+      .panel {
+        flex: 1;
+        border: 1px solid #ccc;
+        overflow: auto; 
+      }
+    
+      /* 左のパネルに関するスタイル */
+      #left-panel {
+        background-color: #f0f0f0;
+      }
+    
+      /* 右のパネルに関するスタイル */
+      #right-panel {
+        background-color: #fff;
+      }
+    </style>
   
-    <div id="result">loading...</div>
+    <div class="container">
+      <div class="panel" id="left-panel">
+        <!-- 左側のコンテンツ -->
+        <h2>雑談</h2>
+    　  <div id="result">loading...</div>
+      </div>
+      <div class="panel" id="right-panel">
+        <h2>バトルスタジアム</h2>
+        <div id="result">loading...</div>
+      </div>
+    </div>
 
     <script language="javascript">
       function pushHideButton() {
