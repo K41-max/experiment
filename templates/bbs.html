@@ -212,7 +212,7 @@
     <div class="container">
       <div class="panel" id="left-panel">
         <h2>雑談</h2>
-    　  <div class="battle_result">loading...</div>
+    　  <div class="main_result">loading...</div>
       </div>
       <div class="panel" id="right-panel">
         <h2>バトルスタジアム</h2>
@@ -357,7 +357,7 @@
               't': 0
             },
             success: function(data) {
-              $('.battle_result').html(data);
+              $('.main_result').html(data);
               $('table tr').each(function() {
                 var firstTd = $(this).find('td:first');
                 var secondTd = $(this).find('td:eq(1)');
@@ -379,7 +379,7 @@
                 secondTd.html(`<button class="userIDAnchor">${username}</button>`);
                 thirdTd.html(escapeHtml(thirdContent));
               });
-              $(".battle_result").find("*").contents().each(function() {
+              $(".main_result").find("*").contents().each(function() {
                 if (this.nodeType === 3) {
                   var text = $(this).text();
                   var replacedText = text.replace(/≫(\d+) /g, "<a href='#$1'>$&</a>");
