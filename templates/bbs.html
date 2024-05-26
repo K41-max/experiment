@@ -198,12 +198,12 @@
         overflow: auto; 
       }
     
-      /* 左のパネルに関するスタイル */
+
       #left-panel {
         background-color: #f0f0f0;
       }
     
-      /* 右のパネルに関するスタイル */
+
       #right-panel {
         background-color: #fff;
       }
@@ -211,7 +211,6 @@
   
     <div class="container">
       <div class="panel" id="left-panel">
-        <!-- 左側のコンテンツ -->
         <h2>雑談</h2>
     　  <div class="main_result">loading...</div>
       </div>
@@ -335,10 +334,10 @@
       sendMessage(name, seed, channel, message);
       $('#message').val("");
     }
+
     
-    
-    // メッセージ読み込み
-    var xhr;
+    //メッセージ読み込み
+        var xhr;
     function loadMessage() {
       if (xhr && xhr.readyState !== 4) { xhr.abort(); }
       
@@ -406,7 +405,6 @@
         }
       });
     }
-
         var xhr;
         function loadMessage() {
           if (xhr && xhr.readyState !== 4) { xhr.abort(); }
