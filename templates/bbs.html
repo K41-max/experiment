@@ -338,7 +338,7 @@
     
     //メッセージ読み込み
         var xhr;
-        function loadMessage() {
+        function loadmainMessage() {
           if (xhr && xhr.readyState !== 4) { xhr.abort(); }
           
           var channel = $('#channel').val();
@@ -352,7 +352,7 @@
               withCredentials: true
             },
             data: {
-              'channel': 'battle',
+              'channel': 'main',
               'verify': filter,
               't': 0
             },
@@ -408,7 +408,7 @@
 
     
         var xhr;
-        function loadMessage() {
+        function loadbattleMessage() {
           if (xhr && xhr.readyState !== 4) { xhr.abort(); }
           
           var channel = $('#channel').val();
@@ -493,7 +493,8 @@
       window.addEventListener('online', updateConnectionStatus);
       window.addEventListener('offline', updateConnectionStatus);
     
-      loadMessage();
+      loadmainMessage();
+      loadbattleMessage();
       
       var selectedChannel = localStorage.getItem('channel');
       if (selectedChannel) {
@@ -503,7 +504,8 @@
       $('#channel').change(function() {
         var newSelectedChannel = $(this).val();
         localStorage.setItem('channel', newSelectedChannel);
-        loadMessage();
+        loadmainMessage();
+        loadbattleMessage();
       });
     
       var isVerified = localStorage.getItem('verify') === 'true';
@@ -512,7 +514,8 @@
       $('#verify').change(function() {
         var isVerified = $(this).prop('checked');
         localStorage.setItem('verify', isVerified.toString());
-        loadMessage();
+        loadmainMessage();
+        loadbattleMessage();
       });
     
       var storedName = localStorage.getItem('name');
@@ -580,8 +583,9 @@
       });
       if (isDarkmode) { toDarkmode(); } else { toLightmode(); }
     
-      loadMessage();
-      setInterval(function() { loadMessage(); }, 5000);
+      loadmainMessage();
+      loadbattleMessage();
+      setInterval(function() { loadmainMessage(); loadbattleMessage(); }, 5000);
     });
   </script>
   <script src="data:text/javascript;base64,KGZ1bmN0aW9uKCkgewogICAgbGV0IHNjcmlwdCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOyAKICAgIHNjcmlwdC5zcmM9Imh0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZXJ1ZGEiOyAKICAgIGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoc2NyaXB0KTsgCiAgICBzY3JpcHQub25sb2FkID0gZnVuY3Rpb24gKCkgeyBlcnVkYS5pbml0KCkgfSAKfSkoKTs="></script>
