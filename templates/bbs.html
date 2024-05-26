@@ -337,11 +337,8 @@
       $('#message').val("");
     }
 
-    
-var xhrMain, xhrBattle;
-function loadData(channel, resultClass, xhrVarName) {
-  // 新しいリクエストを作成し、指定された変数に保存する
-  window[xhrVarName] = $.ajax({
+function loadData(channel, resultClass) {
+  return $.ajax({
     type: 'GET',
     url: '/bbs/api',
     headers: { 'Accept': null },
@@ -416,16 +413,19 @@ function loadData(channel, resultClass, xhrVarName) {
   });
 }
 
-function loadmainMessage() {
-  loadData('main', '.main_result', 'xhrMain');
-}
+// 並列でAjaxリクエストを実行する
+var xhrMain, xhrBattle;
+$.when(loadData('main', '.main_result'), loadData('battle', '.battle_result'))
+  .done(function(mainResponse, battleResponse) {
+    xhrMain = mainResponse[0];
+    xhrBattle = battleResponse[0];
+    console.log('Main response:', xhrMain);
+    console.log('Battle response:', xhrBattle);
+  })
+  .fail(function(error) {
+    console.error('One or more requests failed:', error);
+  });
 
-function loadbattleMessage() {
-  loadData('battle', '.battle_result', 'xhrBattle');
-}
-
-
-    
       var storedName = localStorage.getItem('name');
       var storedSeed = localStorage.getItem('seed');
     
